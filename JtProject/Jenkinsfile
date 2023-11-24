@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = tool 'Maven'
+        MAVEN_HOME = tool 'Maven-3.9.5'
         JAVA_HOME = tool 'Java'
         SONARQUBE_SCANNER_HOME = tool 'SonarQube Scanner'
     }
