@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    environment {
+        MAVEN_HOME = tool 'Maven'
+        JAVA_HOME = tool 'Java'
+        SONARQUBE_SCANNER_HOME = tool 'SonarQube Scanner'
+    }
+    triggers {
+        pollSCM('0 */2 9-17 * 1-5') // Poll SCM every 2 hours at working days between 9-00 and 17-00
+    }
+     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the source code from your version control system
+                git branch: 'feature-create-pipeline-from-JenkinsFile', url: 'https://github.com/rparyian/E-commerce-project-springBoot.git'
+            }
+        }
+        stage('Prepare SonarQube Scanner') {
+            steps {
+                // Download and install SonarQube Scanner
+                script {
+                    def scannerHome = tool 'SonarQube Scanner'
+                    env.PATH = "${scannerHome}/bin:${env.PATH}"
+                }
+            }
+        }
+        stage('Build and Analyze') {
+            steps {
+                // Build the project, run tests, and analyze with SonarQube
+                dir('JtProject')
+                sh "${MAVEN_HOME}/bin/mvn clean test install sonar:sonar jacoco:report"
+            }
+        }
+        stage('Deploy to Tomcat') {
+                    steps {
+                        // Deploy the WAR file to Tomcat with credentials
+                deploy adapters: [tomcat9(credentialsId: '5e64a869-9263-4427-b84d-906d8e921560', path: '', url: 'http://localhost:8282')], contextPath: null, onFailure: false, war: '**/*.war'
+                    }
+                }
+    }
+
+    post {
+        success {
+                    // Record JaCoCo coverage report
+                    jacoco(execPattern: '**/target/jacoco.exec')
+
+                    // Publish HTML reports
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'JtProject/target/site/jacoco',
+                        reportFiles: 'index.html',
+                        reportName: 'JaCoCo Code Coverage'
+                    ])
+
+                    // Actions to perform if the pipeline is successful
+                    echo 'Build and analysis successful!'
+                }
+
+        failure {
+            // Actions to perform if the pipeline fails
+            echo 'Build or analysis failed!'
+        }
+    }
+}
