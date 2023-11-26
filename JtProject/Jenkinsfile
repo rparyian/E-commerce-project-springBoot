@@ -26,10 +26,10 @@ pipeline {
         stage('Build and Analyze') {
             steps {
                 // Build the project, run tests, and analyze with SonarQube
-                withSonarQubeEnv('SonarQube')
-                {
-                dir('JtProject')
-                bat 'mvn clean test install sonar:sonar'
+                withSonarQubeEnv('SonarQube'){
+                    dir('JtProject'){
+                        bat 'mvn clean test install sonar:sonar'
+                    }
                 }
            }
         }
