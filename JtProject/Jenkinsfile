@@ -20,13 +20,13 @@ pipeline {
                 script {
                     def scannerHome = tool 'SonarQube Scanner'
                     env.PATH = "${scannerHome}/bin:${env.PATH}"
-                    env.SONAR.TOKEN="token"
                 }
             }
         }
         stage('Build and Analyze') {
             steps {
                 // Build the project, run tests, and analyze with SonarQube
+                env.SONAR_TOKEN="token"
                 dir('JtProject')
                 {
                 bat 'mvn clean test install sonar:sonar'
