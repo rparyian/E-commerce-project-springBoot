@@ -28,7 +28,7 @@ pipeline {
                 // Build the project, run tests, and analyze with SonarQube
                 dir('JtProject')
                 {
-                bat 'mvn clean test install sonar:sonar jacoco:report'
+                bat 'mvn clean test install sonar:sonar'
                 }
            }
         }
