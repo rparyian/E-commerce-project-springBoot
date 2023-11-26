@@ -20,7 +20,7 @@ pipeline {
                 script {
                     def scannerHome = tool 'SonarQube Scanner'
                     env.PATH = "${scannerHome}/bin:${env.PATH}"
-                    env.SONAR_TOKEN="token"
+                    env.SONAR.TOKEN="token"
                 }
             }
         }
