@@ -36,25 +36,6 @@ pipeline {
     }
 
     post {
-        success {
-                    // Record JaCoCo coverage report
-                    jacoco(execPattern: '**/target/jacoco.exec')
-
-                    // Publish HTML reports
-                    dir('JtProject'){
-                    publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: 'target/site/jacoco',
-                        reportFiles: 'index.html',
-                        reportName: 'JaCoCo Code Coverage'
-                    ])
-                    }
-                    // Actions to perform if the pipeline is successful
-                    echo 'Build and analysis successful!'
-                }
-
         failure {
             // Actions to perform if the pipeline fails
             echo 'Build or analysis failed!'
