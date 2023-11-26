@@ -26,9 +26,9 @@ pipeline {
         stage('Build and Analyze') {
             steps {
                 // Build the project, run tests, and analyze with SonarQube
-                env.SONAR_TOKEN="token"
-                dir('JtProject')
+                withSonarQubeEnv('SonarQube')
                 {
+                dir('JtProject')
                 bat 'mvn clean test install sonar:sonar'
                 }
            }
