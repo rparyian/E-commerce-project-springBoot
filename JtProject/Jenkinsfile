@@ -29,12 +29,6 @@ pipeline {
                 sh 'mvn clean test install sonar:sonar jacoco:report'
             }
         }
-        stage('Deploy to Tomcat') {
-                    steps {
-                        // Deploy the WAR file to Tomcat with credentials
-                deploy adapters: [tomcat9(credentialsId: '5e64a869-9263-4427-b84d-906d8e921560', path: '', url: 'http://localhost:8282')], contextPath: null, onFailure: false, war: '**/*.war'
-                    }
-                }
     }
 
     post {
