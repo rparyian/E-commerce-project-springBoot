@@ -38,7 +38,7 @@ pipeline {
     post {
         success {
                     // Record JaCoCo coverage report
-                   jacoco(execPattern: '**/target/jacoco.exec', classPattern: '**/classes', sourcePattern: '**/src/main/java', reportPath: 'JtProject/target/site/jacoco')
+                   jacoco(execPattern: '**/target/jacoco.exec', classPattern: '**/classes', sourcePattern: '**/src/main/java', reportBuildDir: 'JtProject/target/site/jacoco')
                     // Publish HTML reports
                     publishHTML([
                         allowMissing: false,
