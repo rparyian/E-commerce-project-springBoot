@@ -45,7 +45,7 @@ pipeline {
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
                         keepAll: true,
-                        reportDir: 'JtProject/target/site/jacoco',
+                        reportDir: 'target/site/jacoco',
                         reportFiles: 'index.html',
                         reportName: 'JaCoCo Code Coverage'
                     ])
