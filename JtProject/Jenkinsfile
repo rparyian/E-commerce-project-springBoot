@@ -3,11 +3,6 @@ pipeline {
     tools {
         maven '3.9.5'
     }
-    environment {
-        MAVEN_HOME = tool 'Maven-3.9.5'
-        JAVA_HOME = tool 'Java'
-        SONARQUBE_SCANNER_HOME = tool 'SonarQube Scanner'
-    }
     triggers {
         pollSCM('0 */2 9-17 * 1-5') // Poll SCM every 2 hours at working days between 9-00 and 17-00
     }
