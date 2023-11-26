@@ -41,6 +41,7 @@ pipeline {
                     jacoco(execPattern: '**/target/jacoco.exec')
 
                     // Publish HTML reports
+                    dir('JtProject'){
                     publishHTML([
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
@@ -49,7 +50,7 @@ pipeline {
                         reportFiles: 'index.html',
                         reportName: 'JaCoCo Code Coverage'
                     ])
-
+                    }
                     // Actions to perform if the pipeline is successful
                     echo 'Build and analysis successful!'
                 }
